@@ -14,7 +14,7 @@ final class Version20210622091142 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add PaymentInfo to user table';
     }
 
     public function up(Schema $schema): void

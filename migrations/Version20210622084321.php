@@ -14,7 +14,7 @@ final class Version20210622084321 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add address to the subscription table';
     }
 
     public function up(Schema $schema): void

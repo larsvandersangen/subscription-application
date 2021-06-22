@@ -7,13 +7,11 @@ use App\Entity\Email;
 use App\Entity\PaymentInfo;
 use App\Entity\Subscription;
 use App\Entity\User;
-use App\Repository\PaymentInfoRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
-use Psr\Log\LoggerInterface;
 
 class AppFixtures extends Fixture
 {
@@ -24,8 +22,7 @@ class AppFixtures extends Fixture
     /**
      * AppFixtures constructor.
      */
-    public function __construct(
-    )
+    public function __construct()
     {
         $this->faker = Factory::create();
     }
@@ -64,7 +61,9 @@ class AppFixtures extends Fixture
     private function createEmail() : Email
     {
         $email = new Email();
-        $email->setEmail($this->faker->email());
+
+        $emailAddress = $this->faker->unique()->email();
+        $email->setEmail($emailAddress);
 
         $this->objectManager->persist($email);
 
@@ -81,7 +80,7 @@ class AppFixtures extends Fixture
 
     private function createSubscriptionCollection(): ArrayCollection
     {
-        $numberOfSubscriptionsToCreate = random_int(0,100);
+        $numberOfSubscriptionsToCreate = random_int(0,5);
         $numberOfSubscriptionsCreated = 0;
 
         $subscriptionCollection = new ArrayCollection();
