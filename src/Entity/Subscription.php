@@ -6,11 +6,25 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SubscriptionRepository;
 use App\Endpoint\SubscriptionResolver;
 use App\Endpoint\SubscriptionItemResolver;
+use App\Endpoint\SubscriptionMutator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
  *     graphql={
+ *         "customChangeEmail": {
+ *              "mutation": SubscriptionMutator::class,
+ *              "args": {
+ *                  "id": {
+ *                      "type": "ID!",
+ *                      "description": "The identifier of the subscription to change the email for"
+ *                  },
+ *                  "changeEmailTo": {
+ *                      "type": "String!",
+ *                      "description": "The email to change it into?"
+ *                  }
+ *              }
+ *         },
  *         "customSubscriptionEndpoint": {
  *             "collection_query": SubscriptionResolver::class
  *         },

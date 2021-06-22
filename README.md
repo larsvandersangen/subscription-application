@@ -85,7 +85,21 @@ customSubscriptionItemEndpointSubscription(id: "/api/subscriptions/XXXX")
 
 
 ### 6.3 Mutation on email for subscription
-TBD
+```graphql
+mutation {
+  customChangeEmailSubscription(
+    input: {id: "/api/subscriptions/XXXX", changeEmailTo: "test@test.nl"}
+  ) {
+    subscription {
+      firstname
+      email {
+        email
+      }
+    }
+  }
+}
+
+```
 
 
 
