@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SubscriptionRepository;
+use App\Endpoint\SubscriptionResolver;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource(graphql={"customSubscriptionEndpoint": {"collection_query": SubscriptionResolver::class}})
  * @ORM\Entity(repositoryClass=SubscriptionRepository::class)
  */
 class Subscription
