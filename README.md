@@ -72,7 +72,14 @@ Check the composer.json for the used versions of API-platform.
 
 
 ### 6.2 Ask specific subscription per ID
-TBD
+```graphql
+customSubscriptionItemEndpointSubscription(id: "/api/subscriptions/XXXX") 
+{
+  id
+  firstname
+}
+```
+
 
 
 

@@ -5,10 +5,23 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SubscriptionRepository;
 use App\Endpoint\SubscriptionResolver;
+use App\Endpoint\SubscriptionItemResolver;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource(graphql={"customSubscriptionEndpoint": {"collection_query": SubscriptionResolver::class}})
+ * @ApiResource(
+ *     graphql={
+ *         "customSubscriptionEndpoint": {
+ *             "collection_query": SubscriptionResolver::class
+ *         },
+ *         "customSubscriptionItemEndpoint":  {
+ *             "item_query": SubscriptionItemResolver::class,
+ *             "args": {
+ *               "id": {"type": "ID!"},
+ *             }
+ *         },
+ *     }
+ * )
  * @ORM\Entity(repositoryClass=SubscriptionRepository::class)
  */
 class Subscription
