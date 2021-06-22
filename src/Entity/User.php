@@ -35,6 +35,12 @@ class User
      */
     private $subscriptionCollection;
 
+    /**
+     * @ORM\OneToOne(targetEntity=PaymentInfo::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $paymentInfo;
+
     public function __construct()
     {
         $this->subscriptionCollection = new ArrayCollection();
@@ -77,24 +83,44 @@ class User
         return $this->subscriptionCollection;
     }
 
-    public function addSubscriptionCollection(Subscription $subscriptionCollection): self
+    public function addSubscriptionCollection(ArrayCollection $subscriptionCollection) : self
     {
-        if (!$this->subscriptionCollection->contains($subscriptionCollection)) {
-            $this->subscriptionCollection[] = $subscriptionCollection;
-            $subscriptionCollection->setUser($this);
+        foreach($subscriptionCollection as $subscription) {
+            $this->addSubscription($subscription);
         }
 
         return $this;
     }
 
-    public function removeSubscriptionCollection(Subscription $subscriptionCollection): self
+    public function addSubscription(Subscription $subscription): self
     {
-        if ($this->subscriptionCollection->removeElement($subscriptionCollection)) {
-            // set the owning side to null (unless already changed)
-            if ($subscriptionCollection->getUser() === $this) {
-                $subscriptionCollection->setUser(null);
-            }
+        if (!$this->subscriptionCollection->contains($subscription)) {
+            $subscription->setUser($this);
+            $this->subscriptionCollection->add($subscription);
         }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->subscriptionCollection->removeElement($subscription) && $subscription->getUser() === $this)
+        {
+            $subscription->setUser(null);
+        }
+
+        return $this;
+    }
+
+    public function getPaymentInfo(): ?PaymentInfo
+    {
+        return $this->paymentInfo;
+    }
+
+    public function setPaymentInfo(PaymentInfo $paymentInfo): self
+    {
+        $this->paymentInfo = $paymentInfo;
 
         return $this;
     }

@@ -44,6 +44,12 @@ class Subscription
      */
     private $phonenumber;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Address::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $address;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,18 @@ class Subscription
     public function setPhonenumber(string $phonenumber): self
     {
         $this->phonenumber = $phonenumber;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }
